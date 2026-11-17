@@ -1,0 +1,137 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+
+  width: 100%;
+  height: 78px;
+  padding: 0 var(--page-gutter);
+  margin: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+
+  background-color: rgba(243, 237, 239, 0.96);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-sizing: border-box;
+}
+
+/* Portfolio name */
+
+.navbar-logo {
+  flex-shrink: 0;
+
+  color: #080808;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* Navigation links */
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 30px;
+}
+
+.navbar-links a {
+  position: relative;
+  color: #111111;
+  text-decoration: none;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #1c4352;
+}
+
+/* Animated underline for the active section */
+
+.navbar-links a::after {
+  content: "";
+  position: absolute;
+  left: 8px;   /* matches Bootstrap's default link padding; adjust if the line looks too wide/narrow */
+  right: 8px;
+  bottom: 2px;
+  height: 2px;
+  border-radius: 999px;
+  background: #183C4B;
+
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.35s ease;
+}
+
+.navbar-links a.is-active {
+  color: #183C4B;
+  font-weight: 700;
+}
+
+.navbar-links a.is-active::after {
+  transform: scaleX(1);
+}
+
+/* Prevent sections from hiding behind the navbar */
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 78px;
+}
+
+/* ========================================
+   TABLET
+======================================== */
+
+@media (max-width: 1000px) {
+  .navbar {
+    height: auto;
+    min-height: 78px;
+    padding: 20px 4%;
+
+    flex-wrap: wrap;
+    gap: 18px;
+  }
+
+  .navbar-links {
+    gap: 18px;
+    flex-wrap: wrap;
+  }
+}
+
+/* ========================================
+   MOBILE
+======================================== */
+
+@media (max-width: 600px) {
+  .navbar {
+    padding: 18px 6%;
+    gap: 15px;
+  }
+
+  .navbar-logo {
+    font-size: 13px;
+  }
+
+  .navbar-links {
+    width: 100%;
+    justify-content: flex-start;
+    gap: 14px 18px;
+  }
+
+  .navbar-links a {
+    font-size: 9px;
+  }
+}
