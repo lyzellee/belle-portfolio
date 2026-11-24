@@ -23,7 +23,7 @@
 
 .certificates-heading-row h2 {
   margin: 0 0 10px;
-  font-size: clamp(44px, 5vw, 40px);
+  font-size: clamp(36px, 5vw, 44px);
   line-height: 0.86;
   letter-spacing: -3px;
   font-weight: 800;
@@ -34,17 +34,35 @@
   width: 100%;
 }
 
+/* Whole row is clickable */
 .certificate-row {
   min-height: 116px;
-  padding: 26px 0;
+  padding: 26px 12px;
   border-bottom: 1px solid #cfd5dc;
   display: grid;
   grid-template-columns: 55px minmax(0, 1fr) 50px;
   align-items: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  transition: background 0.2s ease;
 }
 
 .certificate-row:first-child {
   border-top: 0;
+}
+
+.certificate-row:hover {
+  background: rgba(24, 60, 75, 0.06);
+}
+
+.certificate-row:active {
+  background: rgba(24, 60, 75, 0.1);
+}
+
+.certificate-row:focus-visible {
+  outline: 2px solid #183C4B;
+  outline-offset: -2px;
 }
 
 .certificate-number {
@@ -94,10 +112,10 @@
   font-weight: 700;
 }
 
+/* "+" is now just a visual hint */
 .certificate-view-button {
   width: 31px;
   height: 31px;
-  padding: 0;
   border: 1px solid #111827;
   border-radius: 50%;
   background: transparent;
@@ -106,8 +124,14 @@
   place-items: center;
   font-size: 21px;
   line-height: 1;
-  cursor: pointer;
   justify-self: end;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.certificate-row:hover .certificate-view-button {
+  background: #183C4B;
+  border-color: #183C4B;
+  color: #F3EDEF;
 }
 
 .certificate-modal-backdrop {
@@ -165,6 +189,7 @@
   }
 
   .certificate-row {
+    padding: 26px 8px;
     grid-template-columns: 38px minmax(0, 1fr) 42px;
   }
 

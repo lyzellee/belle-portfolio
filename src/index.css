@@ -1,32 +1,48 @@
-
- :root {
+:root {
+  --page-bg: #F3EDEF;
   --page-gutter: 3.75%;
-   --page-gutter-total: 7.5%;
-   --page-gutter-mobile: 6%;
-   --page-gutter-mobile-total: 12%;
+  --page-gutter-total: 7.5%;
+  --page-gutter-mobile: 6%;
+  --page-gutter-mobile-total: 12%;
 }
 
 * {
   box-sizing: border-box;
 }
 
+/*
+  Global background: the page color is set on html, body and #root,
+  so no white ever shows at any screen size (overscroll, short pages,
+  or when something is wider than the viewport).
+*/
 html,
 body {
   width: 100%;
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background-color: var(--page-bg);
+  /* Stops any wide element from creating sideways scrolling / a white strip */
+  overflow-x: clip;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
+body {
+  max-width: 100%;
+}
+
 #root {
   width: 100%;
   min-height: 100vh;
+  min-height: 100dvh;
   margin: 0;
   padding: 0;
+  background-color: var(--page-bg);
 }
 
 /* Professional section entrance and content reveals */
@@ -111,15 +127,12 @@ html {
   transform: scale(1.025);
 }
 
+/* Hover background for certificate rows is handled in Certificates.css */
 .certificate-row {
   transition:
     opacity 780ms cubic-bezier(0.22, 1, 0.36, 1),
     transform 780ms cubic-bezier(0.22, 1, 0.36, 1),
     background-color 220ms ease;
-}
-
-.certificate-row:hover {
-  background-color: rgba(24, 60, 75, 0.025);
 }
 
 .skill-row {

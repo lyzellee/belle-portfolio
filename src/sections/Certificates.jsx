@@ -40,6 +40,13 @@ function Certificates() {
     };
   }, [selectedCertificate]);
 
+  const handleRowKeyDown = (event, certificate) => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      setSelectedCertificate(certificate);
+    }
+  };
+
   return (
     <section className="certificates-section" id="certs">
       <div className="certificates-container">
@@ -49,7 +56,15 @@ function Certificates() {
 
         <div className="certificates-list">
           {certificates.map((certificate) => (
-            <article className="certificate-row" key={certificate.number}>
+            <article
+              className="certificate-row"
+              key={certificate.number}
+              role="button"
+              tabIndex={0}
+              aria-label={`View ${certificate.title} certificate`}
+              onClick={() => setSelectedCertificate(certificate)}
+              onKeyDown={(event) => handleRowKeyDown(event, certificate)}
+            >
               <span className="certificate-number">{certificate.number}</span>
 
               <div className="certificate-main">
@@ -64,14 +79,10 @@ function Certificates() {
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="certificate-view-button"
-                aria-label={`View ${certificate.title} certificate`}
-                onClick={() => setSelectedCertificate(certificate)}
-              >
+              {/* Visual indicator only — the whole row is the click target */}
+              <span className="certificate-view-button" aria-hidden="true">
                 +
-              </button>
+              </span>
             </article>
           ))}
         </div>
@@ -82,7 +93,8 @@ function Certificates() {
           className="certificate-modal-backdrop"
           role="presentation"
           onMouseDown={(event) => {
-            if (event.target === event.currentTarget) setSelectedCertificate(null);
+            if (event.target === event.currentTarget)
+              setSelectedCertificate(null);
           }}
         >
           <div

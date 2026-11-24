@@ -1,10 +1,11 @@
 .experience-section {
   width: 100%;
   min-height: 520px;
-  padding: 56px 0 145px;
+  padding: 56px 0 clamp(72px, 10vw, 145px);
   background: #F3EDEF;
   color: #111827;
   font-family: Arial, Helvetica, sans-serif;
+  overflow-x: hidden;
 }
 
 .experience-container {
@@ -25,18 +26,31 @@
 .experience-heading-row h2,
 .designs-heading-row h2 {
   margin: 0 0 10px;
-  font-size: clamp(44px, 5vw, 40px);
+  font-size: clamp(36px, 5vw, 44px);
   line-height: 0.86;
   letter-spacing: -3px;
   font-weight: 800;
   transform: translateY(-18px);
 }
 
+/*
+  Layout variables (the line and dots are derived from these,
+  so they always stay centered in the gap between date and content):
+  --date-col : width of the date column
+  --gap      : space between date column and content
+  --pad      : left padding of the timeline (used in stacked mobile layout)
+  --line-x   : x position of the vertical line inside the timeline
+*/
 .experience-timeline {
+  --date-col: 200px;
+  --gap: 40px;
+  --pad: 0px;
+  --line-x: calc(var(--date-col) + var(--gap) / 2);
+
   position: relative;
   max-width: 980px;
   margin-left: 100px;
-  padding-left: 0;
+  padding-left: var(--pad);
 }
 
 .experience-timeline::before {
@@ -44,7 +58,7 @@
   position: absolute;
   top: 0;
   bottom: 0;
-  left: 220px;
+  left: var(--line-x);
   width: 1px;
   background: rgba(24, 60, 75, 0.28);
 }
@@ -53,7 +67,7 @@
   content: "";
   position: absolute;
   top: 0;
-  left: 219px;
+  left: calc(var(--line-x) - 1px);
   width: 3px;
   height: var(--timeline-progress, 0%);
   border-radius: 999px;
@@ -65,19 +79,19 @@
 .experience-item {
   position: relative;
   display: grid;
-  grid-template-columns: 200px minmax(0, 520px);
-  column-gap: 40px;
+  grid-template-columns: var(--date-col) minmax(0, 520px);
+  column-gap: var(--gap);
 }
 
 .experience-item + .experience-item {
-  margin-top: 150px;
+  margin-top: clamp(56px, 12vw, 150px);
 }
 
 .experience-item::before {
   content: "";
   position: absolute;
   top: 8px;
-  left: 214px;
+  left: calc(var(--line-x) - var(--pad) - 6.5px);
   width: 13px;
   height: 13px;
   border-radius: 50%;
@@ -91,6 +105,10 @@
   font-weight: 700;
 }
 
+.experience-item > div {
+  min-width: 0;
+}
+
 .experience-title-row {
   margin-bottom: 10px;
   display: flex;
@@ -102,8 +120,9 @@
 .experience-title-row h3 {
   margin: 0;
   font-size: clamp(18px, 2vw, 24px);
-  line-height: 1;
+  line-height: 1.1;
   font-weight: 900;
+  overflow-wrap: anywhere;
 }
 
 .experience-company {
@@ -118,24 +137,43 @@
 .experience-item p:last-child {
   margin: 0;
   font-size: 13px;
-  line-height: 1.25;
+  line-height: 1.4;
   font-weight: 400;
   text-align: justify;
 }
 
-@media (max-width: 900px) {
+/* ---------- Responsive ---------- */
+
+/* Large tablets / small laptops */
+@media (max-width: 1100px) {
   .experience-timeline {
     margin-left: 40px;
   }
+}
+
+/* Tablets: narrower date column, content fills the rest */
+@media (max-width: 900px) {
+  .experience-timeline {
+    --date-col: 150px;
+    --gap: 36px;
+    margin-left: 0;
+    max-width: 100%;
+  }
 
   .experience-item {
-    grid-template-columns: 170px minmax(0, 1fr);
+    grid-template-columns: var(--date-col) minmax(0, 1fr);
   }
 }
 
+/* Phones: stack date above content, line moves to the left */
 @media (max-width: 650px) {
   .experience-section {
     padding-top: 40px;
+  }
+
+  .experience-heading-row,
+  .designs-heading-row {
+    margin-bottom: 36px;
   }
 
   .experience-heading-row h2,
@@ -149,24 +187,44 @@
   }
 
   .experience-timeline {
+    --pad: 34px;
+    --line-x: 6px;
     margin-left: 0;
-    padding-left: 52px;
-  }
-
-  .experience-timeline::before {
-    left: 0;
-  }
-
-  .experience-timeline::after {
-    left: -1px;
   }
 
   .experience-item {
-    grid-template-columns: 1fr;
-    row-gap: 12px;
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
   }
 
-  .experience-item::before {
-    left: -58px;
+  .experience-date {
+    padding-top: 0;
+    font-size: 12px;
+    color: #183C4B;
+  }
+
+  .experience-company {
+    white-space: normal;
+  }
+
+  .experience-item p:last-child {
+    font-size: 14px;
+    line-height: 1.55;
+    text-align: left;
+  }
+}
+
+/* Very small phones */
+@media (max-width: 380px) {
+  .experience-timeline {
+    --pad: 28px;
+  }
+
+  .experience-title-row {
+    gap: 8px;
+  }
+
+  .experience-item p:last-child {
+    font-size: 13px;
   }
 }
